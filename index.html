@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>logical_program_w5</title>
+  </head>
+  <body>
+    <!-- 1 -->
+
+    <input type="number" id="num1" placeholder="Enter first number" />
+    <input
+      type="text"
+      id="operator"
+      placeholder="Enter operator (+, -, *, /)"
+    />
+    <input type="number" id="num2" placeholder="Enter second number" />
+    <button onclick="calculate()">Calculate</button>
+    <p id="result"></p>
+
+    <script>
+      function calculate() {
+        const num1 = parseFloat(document.getElementById("num1").value);
+        const num2 = parseFloat(document.getElementById("num2").value);
+        const operator = document.getElementById("operator").value;
+        let result = 0;
+
+        switch (operator) {
+          case "+":
+            result = num1 + num2;
+            break;
+          case "-":
+            result = num1 - num2;
+            break;
+          case "*":
+            result = num1 * num2;
+            break;
+          case "/":
+            if (num2 !== 0) {
+              result = num1 / num2;
+            } else {
+              result = "Cannot divide by zero";
+            }
+            break;
+          default:
+            result = "Invalid operator";
+            break;
+        }
+
+        document.getElementById("result").textContent = `Result: ${result}`;
+      }
+    </script>
+
+    <!-- 2 -->
+
+    <div>
+      <p id="quote">Click "Generate Quote" to get a random quote!</p>
+      <button onclick="generateQuote()">Generate Quote</button>
+    </div>
+
+    <script>
+      const quotes = [
+        "Be yourself; everyone else is already taken. - Oscar Wilde",
+        "Two things are infinite: the universe and human stupidity; and I'm not sure about the universe. - Albert Einstein",
+        "You know you're in love when you can't fall asleep because reality is finally better than your dreams. - Dr. Seuss",
+        "The only way to do great work is to love what you do. - Steve Jobs",
+        "In three words I can sum up everything I've learned about life: it goes on. - Robert Frost",
+        "Success is not final, failure is not fatal: It is the courage to continue that counts. - Winston Churchill",
+      ];
+
+      function generateQuote() {
+        const quoteIndex = Math.floor(Math.random() * quotes.length);
+        const quote = quotes[quoteIndex];
+        document.getElementById("quote").textContent = quote;
+      }
+    </script>
+
+    <!-- 3 -->
+    <br />
+
+    <div>
+      <h1>Form Validation</h1>
+      <input type="text" id="name" placeholder="Enter your name" />
+      <input type="email" id="email" placeholder="Enter your email" />
+      <button onclick="validateForm()">Submit</button>
+      <p class="error-message" id="error"></p>
+
+      <script>
+        function validateForm() {
+          document.getElementById("error").innerHTML = "";
+
+          const name = document.getElementById("name").value.trim();
+          const email = document.getElementById("email").value.trim();
+
+          let isValid = true;
+
+          if (name === "") {
+            document.getElementById("error").innerHTML =
+              "Name cannot be empty.";
+            isValid = false;
+          }
+
+          const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailPattern.test(email)) {
+            document.getElementById("error").innerHTML =
+              "Invalid email format.";
+            isValid = false;
+          }
+
+          if (isValid) {
+            alert("Form submitted successfully!");
+          }
+        }
+      </script>
+    </div>
+
+    <!-- 5 -->
+    <br />
+    <div></div>
+    <h1>Password Strength Meter</h1>
+    <input type="password" id="password" oninput="checkPasswordStrength()" />
+    <p id="passwordStrength"></p>
+
+    <script>
+      function checkPasswordStrength() {
+        const password = document.getElementById("password").value;
+        const passwordStrengthElement =
+          document.getElementById("passwordStrength");
+
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasLowerCase = /[a-z]/.test(password);
+        const hasNumbers = /\d/.test(password);
+        const hasSpecialChars = /[^A-Za-z0-9]/.test(password);
+        const isLengthValid = password.length >= 8;
+        const strengthScale = [
+          { strength: "Weak", color: "red" },
+          { strength: "Moderate", color: "orange" },
+          { strength: "Strong", color: "green" },
+        ];
+
+        let strengthScore = 0;
+        if (hasUpperCase) strengthScore++;
+        if (hasLowerCase) strengthScore++;
+        if (hasNumbers) strengthScore++;
+        if (hasSpecialChars) strengthScore++;
+        if (isLengthValid) strengthScore++;
+
+        const { strength, color } = strengthScale[Math.min(strengthScore, 2)];
+
+        passwordStrengthElement.innerText = `Password Strength: ${strength}`;
+        passwordStrengthElement.style.color = color;
+      }
+    </script>
+
+    <!--7-->
+    <br />
+    <div>
+       <title>Scroll to Top Button</title>
+    <style>
+        body {
+       font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        #scrollToTopBtn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            outline: none;
+            z-index: 99;
+        }
+    </style>
+</head>
+<body>
+    <h1>Scroll to Top Button</h1>
+    <p>Scroll down to see the button.</p>
+    <button id="scrollToTopBtn" onclick="scrollToTop()">Scroll to Top</button>
+
+    <script>
+
+        function showScrollToTopButton() {
+            const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+            if (window.scrollY > 100) {
+                scrollToTopBtn.style.display = "block";
+            } else {
+                scrollToTopBtn.style.display = "none";
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+
+        window.addEventListener("scroll", showScrollToTopButton);
+    </script>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
